@@ -21,6 +21,7 @@ from typing import List, Optional
 from datetime import date
 import logging
 from logging.handlers import RotatingFileHandler
+from sqlalchemy import text
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -40,7 +41,7 @@ def read_root():
 @app.get('/health')
 def health_check(db: Session = Depends(get_db)):
     try:
-        db.execute('SELECT 1')
+        db.execute(text('SELECT 1'))
         logger.info('Health check: database is healthy')
         return {'status': 'healthy', 'database': 'connected'}
     except Exception:

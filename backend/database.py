@@ -5,7 +5,7 @@ from .models import Base, Equipment, Part, Workshop, ReplacementType
 
 logger = logging.getLogger(__name__)
 
-DATABASE_URL = 'sqlite:///./spare_parts.db'
+DATABASE_URL = 'sqlite:////app/spare_parts.db'
 
 engine = create_engine(DATABASE_URL, connect_args={'check_same_thread': False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
