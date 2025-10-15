@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 
-BASE_URL = 'http://127.0.0.1:8000'
+BASE_URL = 'http://backend:8000'
 
 st.title('Случаи замен запчастей')
 
