@@ -31,8 +31,8 @@
 
 2. **Клонирование репозитория**:
    ```bash
-   git clone <your-repo-url>
-   cd <project-dir>
+   git clone https://github.com/lystarblone/spare_parts_magazine.git
+   cd spare_parts_magazine
    ```
 
 3. **Запуск**:
@@ -53,13 +53,13 @@
 
 1. **Backend тесты**:
    ```bash
-   docker exec -it <backend-container-id> pytest backend/tests
+   docker-compose exec backend pytest backend/tests
    ```
    (Или локально: `pip install -r requirements.txt && pytest backend/tests`).
 
 2. **Frontend тесты**:
    ```bash
-   docker exec -it <frontend-container-id> pytest frontend/tests
+   docker-compose exec frontend pytest frontend/tests
    ```
    (Аналогично локально).
 
