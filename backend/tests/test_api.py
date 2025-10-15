@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from backend.main import app
+import uuid
 
 client = TestClient(app)
 
@@ -9,7 +10,8 @@ def test_root():
     assert 'message' in response.json()
 
 def test_create_and_get_equipment():
-    new_equipment = {'name': 'Тестовое оборудование', 'fleet_quantity': 3}
+    unique_name = f'Тестовое оборудование {uuid.uuid4()}'
+    new_equipment = {'name': unique_name, 'fleet_quantity': 3}
     response = client.post('/equipment/', json=new_equipment)
     assert response.status_code == 200
     data = response.json()
@@ -22,8 +24,9 @@ def test_create_and_get_equipment():
 
 def test_create_and_get_part():
     equipment = client.get('/equipment/').json()[0]
+    unique_name = f'Тестовая запчасть {uuid.uuid4()}'
     new_part = {
-        'name': 'Тестовая запчасть',
+        'name': unique_name,
         'useful_life': 300,
         'equipment_id': equipment['id'],
         'quantity_per_equipment': 2,
@@ -36,12 +39,14 @@ def test_create_and_get_part():
     assert data['name'] == new_part['name']
 
 def test_create_workshop_and_type():
-    new_workshop = {'name': 'Тестовая мастерская', 'address': 'Тестовая улица'}
+    unique_workshop_name = f'Тестовая мастерская {uuid.uuid4()}'
+    new_workshop = {'name': unique_workshop_name, 'address': 'Тестовая улица'}
     response = client.post('/workshops/', json=new_workshop)
     assert response.status_code == 200
     assert response.json()['name'] == new_workshop['name']
 
-    new_type = {'name': 'тестовая замена'}
+    unique_type_name = f'тестовая замена {uuid.uuid4()}'
+    new_type = {'name': unique_type_name}
     response = client.post('/replacement_types/', json=new_type)
     assert response.status_code == 200
     assert response.json()['name'] == new_type['name']

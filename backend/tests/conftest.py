@@ -15,7 +15,10 @@ def db_session():
         yield db
     finally:
         db.close()
+        Base.metadata.drop_all(bind=engine)
 
 @pytest.fixture(autouse=True)
 def override_get_db(monkeypatch, db_session):
-    monkeypatch.setattr('backend.database.get_db', lambda: iter([db_session]))
+    def test_get_db():
+        yield db_session
+    monkeypatch.setattr('backend.main.get_db', test_get_db)
