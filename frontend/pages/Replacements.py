@@ -18,7 +18,7 @@ if eq_id:
 
     if st.button('Сохранить изменения'):
         for idx, row in edited_df.iterrows():
-            requests.put(f'{BASE_URL}/replacements/{row['id']}', json=row.to_dict())
+            requests.put(f"{BASE_URL}/replacements/{row['id']}", json=row.to_dict())
         st.success('Сохранено')
 
     with st.form('add_replacement'):

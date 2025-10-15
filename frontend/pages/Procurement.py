@@ -16,11 +16,11 @@ end_date = st.date_input('Дата окончания использования
 
 if part_id and end_date:
     proc_data = requests.get(f'{BASE_URL}/procurement/{part_id}?end_date={end_date}').json()
-    st.write(f'Самая поздняя дата инициации: {proc_data['latest_init_date'] or "Невозможно"}')
+    st.write(f"Самая поздняя дата инициации: {proc_data['latest_init_date'] or 'Невозможно'}")
 
     all_proc = []
     for p in parts:
-        resp = requests.get(f'{BASE_URL}/procurement/{p['id']}?end_date={end_date}').json()
+        resp = requests.get(f'{BASE_URL}/procurement/{p["id"]}?end_date={end_date}').json()
         all_proc.append(resp)
     df = pd.DataFrame(all_proc)
     st.dataframe(df)
