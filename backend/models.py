@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date, Index
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Index
+from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
 
@@ -9,7 +8,7 @@ class Equipment(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
     fleet_quantity = Column(Integer, nullable=False)
-    parts = relationship('Part', back_populates='equipment')
+    parts = relationship('Part', back_populates='equipment', cascade='all, delete-orphan')
 
 class Part(Base):
     __tablename__ = 'parts'

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 from datetime import date
 
@@ -11,24 +11,22 @@ class EquipmentCreate(EquipmentBase):
 
 class EquipmentResponse(EquipmentBase):
     id: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class PartBase(BaseModel):
     name: str = Field(..., min_length=1)
-    useful_life: int = Field(..., ge=1, description="Useful life in days")
+    useful_life: int = Field(..., ge=1, description='Useful life in days')
     equipment_id: int = Field(..., ge=1)
     quantity_per_equipment: int = Field(..., ge=1)
     stock_quantity: int = Field(..., ge=0)
-    procurement_time: int = Field(..., ge=1, description="Procurement time in days")
+    procurement_time: int = Field(..., ge=1, description='Procurement time in days')
 
 class PartCreate(PartBase):
     pass
 
 class PartResponse(PartBase):
     id: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class WorkshopBase(BaseModel):
     name: str = Field(..., min_length=1)
@@ -39,8 +37,7 @@ class WorkshopCreate(WorkshopBase):
 
 class WorkshopResponse(WorkshopBase):
     id: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ReplacementTypeBase(BaseModel):
     name: str = Field(..., min_length=1)
@@ -50,8 +47,7 @@ class ReplacementTypeCreate(ReplacementTypeBase):
 
 class ReplacementTypeResponse(ReplacementTypeBase):
     id: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ReplacementBase(BaseModel):
     equipment_id: int = Field(..., ge=1)
@@ -65,8 +61,7 @@ class ReplacementCreate(ReplacementBase):
 
 class ReplacementResponse(ReplacementBase):
     id: int
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class WearResponse(BaseModel):
     part_name: str
@@ -75,4 +70,4 @@ class WearResponse(BaseModel):
 
 class ProcurementResponse(BaseModel):
     part_name: str
-    latest_init_date: Optional[date] = Field(None, description="Latest date to initiate procurement, None if not possible")
+    latest_init_date: Optional[date] = Field(None, description='Latest date to initiate procurement, None if not possible')
